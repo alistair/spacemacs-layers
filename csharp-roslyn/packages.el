@@ -16,6 +16,7 @@
     evil-matchit
     ggtags
     helm-gtags
+    shut-up
     (omnisharp :location (recipe
          :fetcher github
          :repo "Omnisharp/omnisharp-emacs"
@@ -43,7 +44,6 @@
                 'omnisharp-go-to-definition))
     :config
     (progn
-      (spacemacs/declare-prefix-for-mode 'csharp-mode "mc" "csharp-roslyn/compile")
       (spacemacs/declare-prefix-for-mode 'csharp-mode "mf" "csharp-roslyn/file")
       (spacemacs/declare-prefix-for-mode 'csharp-mode "mg" "csharp-roslyn/navigation")
       (spacemacs/declare-prefix-for-mode 'csharp-mode "mh" "csharp-roslyn/documentation")
@@ -51,46 +51,70 @@
       (spacemacs/declare-prefix-for-mode 'csharp-mode "ms" "csharp-roslyn/server")
       (spacemacs/declare-prefix-for-mode 'csharp-mode "mt" "csharp-roslyn/tests")
       (spacemacs/set-leader-keys-for-major-mode 'csharp-mode
-        ;; Compile
-        "cc" 'omnisharp-build-in-emacs ;; Only one compile command so use top-level
+        ;; TO ADD
+        ;;
+
+        ;;these exist in emacs package
         ;; Solution/project manipulation
-        "fa" 'omnisharp-add-to-solution-current-file
+
+        ;; doesnt work
+        ;;"fa" 'omnisharp-add-to-solution-current-file
         "fA" 'omnisharp-add-to-solution-dired-selected-files
-        "fr" 'omnisharp-remove-from-project-current-file
-        "fR" 'omnisharp-remove-from-project-dired-selected-files
-        "pl" 'omnisharp-add-reference
+
+        ;; Server manipulation, inspired spacemacs REPL bindings since C# does not provice a REPL
+        "ss" 'omnisharp-start-omnisharp-server
+        ;;"sS" 'omnisharp-stop-server
+        ;;"sr" 'omnisharp-reload-solution
+
+        ;; Help, documentation, info
+        "ht" 'omnisharp-current-type-information
+        "hT" 'omnisharp-current-type-information-to-kill-ring
+        "hd" 'omnisharp-current-type-documentation
+
+        ;; Is this really a good place for it
+        "ho" 'omnisharp-show-overloads-at-point
+
+        ;;Refactoring
+        "rm" 'omnisharp-rename
+        ;;doesnt work
+        ;;"rM" 'omnisharp-rename-interactively
+        "rr" 'omnisharp-run-code-action-refactoring
+
         ;; Navigation
-        "gG"   'omnisharp-go-to-definition-other-window
         "gu"   'omnisharp-helm-find-usages
         "gU"   'omnisharp-find-usages-with-ido
         "gs"   'omnisharp-helm-find-symbols
         "gi"   'omnisharp-find-implementations
         "gI"   'omnisharp-find-implementations-with-ido
+        "gG"   'omnisharp-go-to-definition-other-window
         "gr"   'omnisharp-navigate-to-region
         "gm"   'omnisharp-navigate-to-solution-member
         "gM"   'omnisharp-navigate-to-solution-member-other-window
         "gf"   'omnisharp-navigate-to-solution-file
         "gF"   'omnisharp-navigate-to-solution-file-then-file-member
         "gc"   'omnisharp-navigate-to-current-file-member
-        ;; Help, documentation, info
-        "ht" 'omnisharp-current-type-information
-        "hT" 'omnisharp-current-type-information-to-kill-ring
+
+        ;;Code manipulation
+        "=" 'omnisharp-code-format-entire-file
+        "F" 'omnisharp-code-format-region
+
+        ;; Checking
+
+        ;; Navigation
         ;; Refactoring
-        "rm" 'omnisharp-rename
-        "rM" 'omnisharp-rename-interactively
-        "rr" 'omnisharp-run-code-action-refactoring
         ;; Server manipulation, inspired spacemacs REPL bindings since C# does not provice a REPL
-        "ss" 'omnisharp-start-omnisharp-server
-        "sS" 'omnisharp-stop-server
-        "sr" 'omnisharp-reload-solution
+        ;;"ss" 'omnisharp-start-omnisharp-server
+        ;;"sS" 'omnisharp-stop-server
+        ;;"sr" 'omnisharp-reload-solution
         ;; Tests
-        "ta" 'omnisharp-unit-test-all
-        "tb" 'omnisharp-unit-test-fixture
-        "tt" 'omnisharp-unit-test-single
+        ;;"ta" 'omnisharp-unit-test-all
+        ;;"tb" 'omnisharp-unit-test-fixture
+        ;;"tt" 'omnisharp-unit-test-single
         ;; Code manipulation
-        "u" 'omnisharp-auto-complete-overrides
-        "i" 'omnisharp-fix-usings
-        "=" 'omnisharp-code-format))))
+        ;;"u" 'omnisharp-auto-complete-overrides
+        ;;"i" 'omnisharp-fix-usings
+        ;;"=" 'omnisharp-code-format
+        ))))
 
 (defun csharp-roslyn/post-init-company ()
   (spacemacs|add-company-hook csharp-mode))
